@@ -94,7 +94,9 @@ h1 .os { color: var(--pink-dark); }
   border-radius: 34px; border: 10px solid #160b09; background: linear-gradient(160deg, #20100d, #5a2730 55%, #f77ca9);
   display: grid; place-items: center; text-align: center; padding: 20px;
 }
-.phone .paw { font-size: 54px; }
+.phone .paw { color: var(--pink); }
+.phone .paw svg { width: 58px; height: 58px; display: block; }
+.mark svg { width: 26px; height: 26px; display: block; }
 .phone strong { display: block; font-size: 28px; line-height: 1.1; }
 .spec { display: grid; gap: 10px; font-size: 14px; }
 .spec div { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.16); padding-bottom: 8px; }
