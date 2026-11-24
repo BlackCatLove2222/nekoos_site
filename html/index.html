@@ -6,7 +6,7 @@
   <title>nekoOS 0.1 Beta — Pixel 2 (walleye) Sample Page</title>
   <meta name="description" content="nekoOS 0.1 Beta for Pixel 2 (walleye) のサンプル紹介ページです。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261124-1">
-<link rel="stylesheet" href="css/style.css?v=20261125-1">
+<link rel="stylesheet" href="css/style.css?v=20261125-2">
 </head>
 <body>
   <header>
@@ -25,7 +25,14 @@
 
   <main class="wrap">
     <div class="hero">
+      <h2 class="devices-title">対応端末</h2>
+      <div class="device-filters">
+        <input class="device-search" id="device-search" type="search" placeholder="機種名・コードネームで検索" aria-label="端末を検索">
+        <div class="filter-row"><span class="filter-label">メーカー</span><div class="filter-chips" id="maker-chips"></div></div>
+        <div class="filter-row"><span class="filter-label">状態</span><div class="filter-chips" id="status-chips"></div></div>
+      </div>
       <div class="device-tabs" id="device-tabs" role="tablist" aria-label="対応端末"></div>
+      <p class="device-empty" id="device-empty" hidden>条件に一致する端末がありません</p>
       <div class="hero-grid">
         <article class="hero-card">
           <div class="eyebrow" id="d-eyebrow">Pixel 2 / walleye</div>
@@ -171,6 +178,6 @@
       <p>配布時にはカーネルソースとライセンス表示へのリンクをここに掲載します。</p>
     </div>
   </footer>
-<script src="js/script.js?v=20261125-1"></script>
+<script src="js/script.js?v=20261125-2"></script>
 </body>
 </html>

@@ -133,3 +133,16 @@ footer { padding: 34px 0 48px; color: var(--muted); font-size: 13px; }
 .device-tab { cursor: pointer; border: 1px solid var(--line); background: #fff; color: var(--ink);
   border-radius: 999px; padding: 8px 16px; font-weight: 800; font-size: 14px; font-family: inherit; }
 .device-tab.on { background: var(--plum); color: #fff; border-color: var(--plum); }
+
+.devices-title { font-size: clamp(30px, 5vw, 44px); font-weight: 900; letter-spacing: -.02em; margin: 0 0 14px; }
+.device-filters { display: grid; gap: 10px; margin: 0 0 14px; }
+.device-search { width: min(420px, 100%); box-sizing: border-box; padding: 10px 14px; font-size: 15px;
+  border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font-family: inherit; }
+.device-search:focus { outline: 2px solid var(--pink); outline-offset: 1px; }
+.filter-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.filter-label { font-size: 13px; font-weight: 800; color: var(--pink-dark); min-width: 52px; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-chip { cursor: pointer; border: 1px solid var(--line); background: #fff; color: var(--ink);
+  border-radius: 999px; padding: 5px 13px; font-weight: 700; font-size: 13px; font-family: inherit; }
+.filter-chip.on { background: var(--pink); border-color: var(--pink); color: #fff; }
+.device-empty { color: var(--pink-dark); font-weight: 700; margin: 0 0 14px; }

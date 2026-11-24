@@ -4,8 +4,13 @@
   "use strict";
   function el(id) { return document.getElementById(id); }
   var tabsBox = el("device-tabs");
+  var devices = [];
+  var tabBtns = {}; // id -> button
+  var currentId = null;
+  var fQuery = "", fMaker = "*", fStatus = "*";
 
   function render(d) {
+    currentId = d.id;
     el("d-eyebrow").textContent = d.name + " / " + d.codename;
     el("d-version").textContent = d.version;
     el("d-lead").textContent = d.lead || "";
@@ -55,17 +60,56 @@
       tl.appendChild(art);
     });
     document.title = "nekoOS " + d.version + " — " + d.name + " (" + d.codename + ") Sample Page";
-    Array.prototype.forEach.call(tabsBox.children, function (b) {
-      var on = b.dataset.id === d.id;
-      b.classList.toggle("on", on);
-      b.setAttribute("aria-selected", on ? "true" : "false");
+    Object.keys(tabBtns).forEach(function (id) {
+      var on = id === d.id;
+      tabBtns[id].classList.toggle("on", on);
+      tabBtns[id].setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+
+  function matches(d) {
+    if (fMaker !== "*" && (d.maker || "") !== fMaker) return false;
+    if (fStatus !== "*" && (d.status || "") !== fStatus) return false;
+    if (fQuery) {
+      var hay = (d.name + " " + d.codename + " " + (d.maker || "")).toLowerCase();
+      if (hay.indexOf(fQuery) === -1) return false;
+    }
+    return true;
+  }
+
+  function applyFilter() {
+    var visible = devices.filter(matches);
+    devices.forEach(function (d) {
+      tabBtns[d.id].style.display = matches(d) ? "" : "none";
+    });
+    el("device-empty").hidden = visible.length > 0;
+    if (visible.length && !visible.some(function (d) { return d.id === currentId; })) {
+      render(visible[0]);
+    }
+  }
+
+  function buildChips(boxId, values, onPick) {
+    var box = el(boxId);
+    box.innerHTML = "";
+    ["*"].concat(values).forEach(function (v) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "filter-chip" + (v === "*" ? " on" : "");
+      b.textContent = v === "*" ? "すべて" : v;
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(box.children, function (x) { x.classList.remove("on"); });
+        b.classList.add("on");
+        onPick(v);
+        applyFilter();
+      });
+      box.appendChild(b);
     });
   }
 
   fetch("device.json", { cache: "no-store" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
-      var devices = (data && data.devices) || [];
+      devices = (data && data.devices) || [];
       if (!devices.length) return;
       devices.forEach(function (d) {
         var b = document.createElement("button");
@@ -76,6 +120,18 @@
         b.textContent = d.name + " (" + d.codename + ")";
         b.addEventListener("click", function () { render(d); });
         tabsBox.appendChild(b);
+        tabBtns[d.id] = b;
+      });
+      var makers = [], statuses = [];
+      devices.forEach(function (d) {
+        if (d.maker && makers.indexOf(d.maker) === -1) makers.push(d.maker);
+        if (d.status && statuses.indexOf(d.status) === -1) statuses.push(d.status);
+      });
+      buildChips("maker-chips", makers, function (v) { fMaker = v; });
+      buildChips("status-chips", statuses, function (v) { fStatus = v; });
+      el("device-search").addEventListener("input", function (e) {
+        fQuery = e.target.value.trim().toLowerCase();
+        applyFilter();
       });
       render(devices[0]);
     })
