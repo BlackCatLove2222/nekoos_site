@@ -6,7 +6,7 @@
   <title>nekoOS 0.1 Beta — Pixel 2 (walleye) Sample Page</title>
   <meta name="description" content="nekoOS 0.1 Beta for Pixel 2 (walleye) のサンプル紹介ページです。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261124-1">
-<link rel="stylesheet" href="css/style.css?v=20261124-2">
+<link rel="stylesheet" href="css/style.css?v=20261125-1">
 </head>
 <body>
   <header>
@@ -25,12 +25,13 @@
 
   <main class="wrap">
     <div class="hero">
+      <div class="device-tabs" id="device-tabs" role="tablist" aria-label="対応端末"></div>
       <div class="hero-grid">
         <article class="hero-card">
-          <div class="eyebrow">Pixel 2 / walleye</div>
-          <h1>neko<span class="os">OS</span> 0.1 Beta</h1>
-          <p class="lead">LineageOS 22.2（Android 15）をベースにした、Pixel 2 向けの小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。</p>
-          <div class="badges">
+          <div class="eyebrow" id="d-eyebrow">Pixel 2 / walleye</div>
+          <h1>neko<span class="os">OS</span> <span id="d-version">0.1 Beta</span></h1>
+          <p class="lead" id="d-lead">LineageOS 22.2（Android 15）をベースにした、Pixel 2 向けの小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。</p>
+          <div class="badges" id="d-badges">
             <span class="badge">Android 15</span>
             <span class="badge">LineageOS 22.2 base</span>
             <span class="badge">Device: walleye</span>
@@ -48,14 +49,14 @@
             <div>
               <div class="paw"><svg viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><ellipse cx="10.5" cy="27" rx="5" ry="7.5" transform="rotate(-24 10.5 27)"/><ellipse cx="21.5" cy="18.5" rx="5.5" ry="8" transform="rotate(-8 21.5 18.5)"/><ellipse cx="42.5" cy="18.5" rx="5.5" ry="8" transform="rotate(8 42.5 18.5)"/><ellipse cx="53.5" cy="27" rx="5" ry="7.5" transform="rotate(24 53.5 27)"/><path d="M32 33c8 0 15 7 15 14 0 7-7 10-15 10s-15-3-15-10c0-7 7-14 15-14z"/></g></svg></div>
               <strong>nekoOS</strong>
-              <span>0.1 Beta</span>
+              <span id="d-phone-version">0.1 Beta</span>
             </div>
           </div>
           <div class="spec">
-            <div><span>対象機種</span><strong>Pixel 2</strong></div>
-            <div><span>コードネーム</span><strong>walleye</strong></div>
-            <div><span>ベース</span><strong>LineageOS 22.2</strong></div>
-            <div><span>テーマ</span><strong>Pink / Paw</strong></div>
+            <div><span>対象機種</span><strong id="d-spec-name">Pixel 2</strong></div>
+            <div><span>コードネーム</span><strong id="d-spec-code">walleye</strong></div>
+            <div><span>ベース</span><strong id="d-spec-base">LineageOS 22.2</strong></div>
+            <div><span>テーマ</span><strong id="d-spec-theme">Pink / Paw</strong></div>
           </div>
         </aside>
       </div>
@@ -63,7 +64,7 @@
 
     <section id="about">
       <h2>nekoOS について</h2>
-      <div class="note">
+      <div class="note" id="d-about">
         nekoOS は、日常利用のじゃまをしない範囲で「自分の端末らしく」仕上げていく個人プロジェクトです。Pixel 2 版は、まず安定して起動し、更新できる土台を作ることを目標にしています。
       </div>
     </section>
@@ -109,11 +110,11 @@
       <div class="download">
         <div>
           <div class="eyebrow" style="color:#ffd2e1">Latest sample build</div>
-          <h3 style="margin:6px 0 8px; font-size:24px;">nekoOS-0.1-20261118-OFFICIAL-walleye.zip</h3>
-          <p style="margin:0 0 12px; color:#ffe7ef;">サイズ: 約 1.0 GB / 対象: Pixel 2 (walleye)</p>
-          <div class="hash">SHA-256: <code>sample-hash-placeholder-for-design-preview</code></div>
+          <h3 style="margin:6px 0 8px; font-size:24px;" id="dl-file">nekoOS-0.1-20261118-OFFICIAL-walleye.zip</h3>
+          <p style="margin:0 0 12px; color:#ffe7ef;" id="dl-meta">サイズ: 約 1.0 GB / 対象: Pixel 2 (walleye)</p>
+          <div class="hash">SHA-256: <code id="dl-hash">sample-hash-placeholder-for-design-preview</code></div>
         </div>
-        <a class="btn btn-primary" href="#" aria-disabled="true">Download sample</a>
+        <a class="btn btn-primary" href="#" aria-disabled="true" id="dl-btn">Download sample</a>
       </div>
       <p class="muted">実際の配布時には、ここに正式なダウンロードリンク、完全な SHA-256、署名情報、ソースコードへのリンクを掲載します。</p>
     </section>
@@ -138,7 +139,7 @@
 
     <section id="changelog">
       <h2>更新履歴（サンプル）</h2>
-      <div class="timeline">
+      <div class="timeline" id="d-changelog">
         <article class="card entry">
           <div class="date">2026-11-18</div>
           <div>
@@ -170,5 +171,6 @@
       <p>配布時にはカーネルソースとライセンス表示へのリンクをここに掲載します。</p>
     </div>
   </footer>
+<script src="js/script.js?v=20261125-1"></script>
 </body>
 </html>

@@ -128,3 +128,8 @@ footer { padding: 34px 0 48px; color: var(--muted); font-size: 13px; }
   .entry { grid-template-columns: 1fr; }
   .hero { padding-top: 38px; }
 }
+
+.device-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
+.device-tab { cursor: pointer; border: 1px solid var(--line); background: #fff; color: var(--ink);
+  border-radius: 999px; padding: 8px 16px; font-weight: 800; font-size: 14px; font-family: inherit; }
+.device-tab.on { background: var(--plum); color: #fff; border-color: var(--plum); }
