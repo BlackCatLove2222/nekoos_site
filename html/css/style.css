@@ -95,7 +95,7 @@ h1 .os { color: var(--pink-dark); }
   display: grid; place-items: center; text-align: center; padding: 20px;
 }
 .phone .paw { color: var(--pink); }
-.phone .paw svg { width: 58px; height: 58px; display: block; }
+.phone .paw svg { width: 58px; height: 58px; display: block; margin-inline: auto; }
 .mark svg { width: 26px; height: 26px; display: block; }
 .phone strong { display: block; font-size: 28px; line-height: 1.1; }
 .spec { display: grid; gap: 10px; font-size: 14px; }
