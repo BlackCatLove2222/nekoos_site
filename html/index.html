@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>nekoOS 0.1 Beta — Pixel 2 (walleye) Sample Page</title>
-  <meta name="description" content="nekoOS 0.1 Beta for Pixel 2 (walleye) のサンプル紹介ページです。">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261124-1">
-<link rel="stylesheet" href="css/style.css?v=20261125-3">
+  <title>nekoOS 0.1 Beta — Sample Page</title>
+  <meta name="description" content="nekoOS 0.1 Beta のサンプル紹介ページです。対応端末ごとに専用ページがあります。">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261126-1">
+  <link rel="stylesheet" href="css/style.css?v=20261126-1">
 </head>
 <body>
   <header>
@@ -15,158 +15,86 @@
       <nav class="nav-links" aria-label="ページ内リンク">
         <a href="#about">概要</a>
         <a href="#features">特徴</a>
-        <a href="#download">ダウンロード</a>
-        <a href="#notes">注意点</a>
-        <a href="#changelog">更新履歴</a>
+        <a href="#devices">対応端末</a>
       </nav>
       <span class="sample-pill">SAMPLE / デザイン確認用</span>
     </div>
   </header>
 
   <main class="wrap">
+    <!-- ヒーロー: サイト全体の導入。文面は site.json の hero が正 -->
     <div class="hero">
+      <div class="hero-grid">
+        <article class="hero-card">
+          <div class="eyebrow" id="s-eyebrow">nekoOS Project</div>
+          <h1>neko<span class="os">OS</span> <span id="s-version">0.1 Beta</span></h1>
+          <p class="lead" id="s-lead">LineageOS 22.2（Android 15）をベースにした、小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。</p>
+          <div class="badges" id="s-badges">
+            <span class="badge">Android 15</span>
+            <span class="badge">LineageOS 22.2 base</span>
+            <span class="badge">Status: Beta</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="#devices">対応端末を見る</a>
+            <a class="btn btn-ghost" href="#features">特徴を見る</a>
+          </div>
+          <p class="muted" id="s-note">※ このページは友人に見せるためのサンプルです。ダウンロードリンクとチェックサムはダミー表示になっています。</p>
+        </article>
+
+        <aside class="device-card" aria-label="nekoOS イメージ">
+          <div class="phone">
+            <div>
+              <div class="paw"><svg viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><ellipse cx="10.5" cy="27" rx="5" ry="7.5" transform="rotate(-24 10.5 27)"/><ellipse cx="21.5" cy="18.5" rx="5.5" ry="8" transform="rotate(-8 21.5 18.5)"/><ellipse cx="42.5" cy="18.5" rx="5.5" ry="8" transform="rotate(8 42.5 18.5)"/><ellipse cx="53.5" cy="27" rx="5" ry="7.5" transform="rotate(24 53.5 27)"/><path d="M32 33c8 0 15 7 15 14 0 7-7 10-15 10s-15-3-15-10c0-7 7-14 15-14z"/></g></svg></div>
+              <strong>nekoOS</strong>
+              <span id="s-phone-version">0.1 Beta</span>
+            </div>
+          </div>
+          <p class="muted" style="color:#ffd2e1; margin:0;">対応端末は下の一覧から選んでください。各端末のダウンロードや更新履歴は専用ページにあります。</p>
+        </aside>
+      </div>
+    </div>
+
+    <!-- について: OS 全体。文面は site.json の about が正 -->
+    <section id="about">
+      <h2 id="s-about-title">nekoOS について</h2>
+      <div class="note" id="s-about">nekoOS は、日常利用のじゃまをしない範囲で「自分の端末らしく」仕上げていく個人プロジェクトです。対応端末ごとに、まず安定して起動し、更新できる土台を作ることを目標にしています。</div>
+    </section>
+
+    <!-- 特徴: OS 全体。項目は site.json の features が正 -->
+    <section id="features">
+      <h2>特徴</h2>
+      <div class="grid" id="s-features">
+        <article class="card"><div class="icon">📶</div><h3>日本の APN を収録</h3><p>日本向けキャリア APN をあらかじめ入れて、初期設定の手間を減らします。</p></article>
+        <article class="card"><div class="icon">🐾</div><h3>専用ブートアニメーション</h3><p>肉球ロゴとピンクのテーマで、起動画面から nekoOS らしく。</p></article>
+        <article class="card"><div class="icon">⬆️</div><h3>Updater / Recovery を nekoOS 化</h3><p>更新画面やリカバリ表示も nekoOS 表記に寄せて、世界観を統一します。</p></article>
+        <article class="card"><div class="icon">📷</div><h3>カメラ体験を重視</h3><p>Pixel らしいカメラ体験をできるだけ残す方針で調整中です。</p></article>
+        <article class="card"><div class="icon">🧩</div><h3>最小限の Google サービス</h3><p>必要なものだけを入れる、軽めの構成を目指します。</p></article>
+        <article class="card"><div class="icon">🔐</div><h3>再ロックを視野に</h3><p>Pixel の仕組みを活かした avb_custom_key による再ロックは、今後のマイルストーンです。</p></article>
+      </div>
+    </section>
+
+    <!-- 対応端末: 絞り込み付きカード一覧のみ。各カードから専用ページへ -->
+    <section id="devices">
       <h2 class="devices-title">対応端末</h2>
       <div class="device-filters">
         <input class="device-search" id="device-search" type="search" placeholder="機種名・コードネームで検索" aria-label="端末を検索">
         <div class="filter-row"><span class="filter-label">メーカー</span><div class="filter-chips" id="maker-chips"></div></div>
         <div class="filter-row"><span class="filter-label">状態</span><div class="filter-chips" id="status-chips"></div></div>
       </div>
-      <div class="device-tabs" id="device-tabs" role="tablist" aria-label="対応端末"></div>
       <p class="device-empty" id="device-empty" hidden>条件に一致する端末がありません</p>
-      <div class="hero-grid">
-        <article class="hero-card">
-          <div class="eyebrow" id="d-eyebrow">Pixel 2 / walleye</div>
-          <h1>neko<span class="os">OS</span> <span id="d-version">0.1 Beta</span></h1>
-          <p class="lead" id="d-lead">LineageOS 22.2（Android 15）をベースにした、Pixel 2 向けの小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。</p>
-          <div class="badges" id="d-badges">
-            <span class="badge">Android 15</span>
-            <span class="badge">LineageOS 22.2 base</span>
-            <span class="badge">Device: walleye</span>
-            <span class="badge">Status: Beta</span>
-          </div>
-          <div class="actions">
-            <a class="btn btn-primary" href="#download">ビルド情報を見る</a>
-            <a class="btn btn-ghost" href="#notes">導入前の注意</a>
-          </div>
-          <p class="muted">※ このページは友人に見せるためのサンプルです。ダウンロードリンクとチェックサムはダミー表示になっています。</p>
+      <div class="device-list" id="device-list">
+        <!-- 静的フォールバック: JS / device.json が読めないときもリンクだけは辿れる -->
+        <article class="card device-list-card">
+          <div class="eyebrow">Google / walleye</div>
+          <h3>Pixel 2</h3>
+          <p>nekoOS 0.1 Beta / LineageOS 22.2</p>
+          <div class="actions"><a class="btn btn-primary" href="device.html?d=walleye">この端末のページへ</a></div>
         </article>
-
-        <aside class="device-card" aria-label="端末イメージ">
-          <div class="phone">
-            <div>
-              <div class="paw"><svg viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><ellipse cx="10.5" cy="27" rx="5" ry="7.5" transform="rotate(-24 10.5 27)"/><ellipse cx="21.5" cy="18.5" rx="5.5" ry="8" transform="rotate(-8 21.5 18.5)"/><ellipse cx="42.5" cy="18.5" rx="5.5" ry="8" transform="rotate(8 42.5 18.5)"/><ellipse cx="53.5" cy="27" rx="5" ry="7.5" transform="rotate(24 53.5 27)"/><path d="M32 33c8 0 15 7 15 14 0 7-7 10-15 10s-15-3-15-10c0-7 7-14 15-14z"/></g></svg></div>
-              <strong>nekoOS</strong>
-              <span id="d-phone-version">0.1 Beta</span>
-            </div>
-          </div>
-          <div class="spec">
-            <div><span>対象機種</span><strong id="d-spec-name">Pixel 2</strong></div>
-            <div><span>コードネーム</span><strong id="d-spec-code">walleye</strong></div>
-            <div><span>ベース</span><strong id="d-spec-base">LineageOS 22.2</strong></div>
-            <div><span>テーマ</span><strong id="d-spec-theme">Pink / Paw</strong></div>
-          </div>
-        </aside>
-      </div>
-    </div>
-
-    <section id="about">
-      <h2>nekoOS について</h2>
-      <div class="note" id="d-about">
-        nekoOS は、日常利用のじゃまをしない範囲で「自分の端末らしく」仕上げていく個人プロジェクトです。Pixel 2 版は、まず安定して起動し、更新できる土台を作ることを目標にしています。
-      </div>
-    </section>
-
-    <section id="features">
-      <h2>特徴</h2>
-      <div class="grid">
-        <article class="card">
-          <div class="icon">📶</div>
-          <h3>日本の APN を収録</h3>
-          <p>日本向けキャリア APN をあらかじめ入れて、初期設定の手間を減らします。</p>
-        </article>
-        <article class="card">
-          <div class="icon">🐾</div>
-          <h3>専用ブートアニメーション</h3>
-          <p>肉球ロゴとピンクのテーマで、起動画面から nekoOS らしく。</p>
-        </article>
-        <article class="card">
-          <div class="icon">⬆️</div>
-          <h3>Updater / Recovery を nekoOS 化</h3>
-          <p>更新画面やリカバリ表示も nekoOS 表記に寄せて、世界観を統一します。</p>
-        </article>
-        <article class="card">
-          <div class="icon">📷</div>
-          <h3>カメラ体験を重視</h3>
-          <p>Pixel らしいカメラ体験をできるだけ残す方針で調整中です。</p>
-        </article>
-        <article class="card">
-          <div class="icon">🧩</div>
-          <h3>最小限の Google サービス</h3>
-          <p>必要なものだけを入れる、軽めの構成を目指します。</p>
-        </article>
-        <article class="card">
-          <div class="icon">🔐</div>
-          <h3>再ロックを視野に</h3>
-          <p>Pixel の仕組みを活かした avb_custom_key による再ロックは、今後のマイルストーンです。</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="download">
-      <h2>ダウンロード（サンプル）</h2>
-      <div class="download">
-        <div>
-          <div class="eyebrow" style="color:#ffd2e1">Latest sample build</div>
-          <h3 style="margin:6px 0 8px; font-size:24px;" id="dl-file">nekoOS-0.1-20261118-OFFICIAL-walleye.zip</h3>
-          <p style="margin:0 0 12px; color:#ffe7ef;" id="dl-meta">サイズ: 約 1.0 GB / 対象: Pixel 2 (walleye)</p>
-          <div class="hash">SHA-256: <code id="dl-hash">sample-hash-placeholder-for-design-preview</code></div>
-        </div>
-        <a class="btn btn-primary" href="#" aria-disabled="true" id="dl-btn">Download sample</a>
-      </div>
-      <p class="muted">実際の配布時には、ここに正式なダウンロードリンク、完全な SHA-256、署名情報、ソースコードへのリンクを掲載します。</p>
-    </section>
-
-    <section id="notes">
-      <h2>導入前の注意</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>ベータ版です</h3>
-          <p>一部機能は検証中です。日常利用の端末に入れる場合は、想定外の不具合がある前提でお願いします。</p>
-        </article>
-        <article class="card">
-          <h3>バックアップ必須</h3>
-          <p>ブートローダー解錠や初期導入ではデータが消える可能性があります。大事なデータは必ず事前に保存してください。</p>
-        </article>
-        <article class="card">
-          <h3>自己責任でお願いします</h3>
-          <p>導入によって生じたトラブルについて、作者は責任を負いません。復旧手順を確認してから作業してください。</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="changelog">
-      <h2>更新履歴（サンプル）</h2>
-      <div class="timeline" id="d-changelog">
-        <article class="card entry">
-          <div class="date">2026-11-18</div>
-          <div>
-            <h3>Beta build — modem / Wi-Fi まわりの修正検証</h3>
-            <p>通信まわりの修正を含むビルドを作成し、実機での確認を進めています。</p>
-          </div>
-        </article>
-        <article class="card entry">
-          <div class="date">2026-11-18</div>
-          <div>
-            <h3>Beta 6 — KernelSU 対応</h3>
-            <p>KernelSU をカーネル側に組み込み、データを保持したままの更新テストを実施しました。</p>
-          </div>
-        </article>
-        <article class="card entry">
-          <div class="date">2026-11-17</div>
-          <div>
-            <h3>First beta — walleye 初回ビルド</h3>
-            <p>nekoOS 0.1 の初回ベータが起動。ブートアニメーション、JP APN、基本表示の nekoOS 化を確認しました。</p>
-          </div>
+        <article class="card device-list-card">
+          <div class="eyebrow">Google / taimen</div>
+          <h3>Pixel 2 XL</h3>
+          <p>nekoOS 0.1 Beta / LineageOS 22.2</p>
+          <div class="actions"><a class="btn btn-primary" href="device.html?d=taimen">この端末のページへ</a></div>
         </article>
       </div>
     </section>
@@ -178,6 +106,6 @@
       <p>配布時にはカーネルソースとライセンス表示へのリンクをここに掲載します。</p>
     </div>
   </footer>
-<script src="js/script.js?v=20261125-2"></script>
+  <script src="js/script.js?v=20261126-1"></script>
 </body>
 </html>

@@ -50,14 +50,14 @@
       "status": "Beta",
       "base": "LineageOS 22.2",
       "theme": "Pink / Paw",
-      "lead": "LineageOS 22.2（Android 15）をベースにした、Pixel 2 向けの小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。",
+      "lead": "LineageOS 22.2（Android 15）をベースにした、Pixel 2 XL 向けの小さなカスタム OS プロジェクト。日本の APN、専用ブートアニメーション、nekoOS らしいピンクのテーマを少しずつ育てています。",
       "badges": [
         "Android 15",
         "LineageOS 22.2 base",
-        "Device: walleye",
+        "Device: taimen",
         "Status: Beta"
       ],
-      "about": "nekoOS は、日常利用のじゃまをしない範囲で「自分の端末らしく」仕上げていく個人プロジェクトです。Pixel 2 版は、まず安定して起動し、更新できる土台を作ることを目標にしています。",
+      "about": "nekoOS は、日常利用のじゃまをしない範囲で「自分の端末らしく」仕上げていく個人プロジェクトです。Pixel 2 XL 版は、まず安定して起動し、更新できる土台を作ることを目標にしています。",
       "download": {
         "file": "nekoOS-0.1-20261118-OFFICIAL-taimen.zip",
         "size": "約 1.0 GB",
@@ -77,7 +77,7 @@
         },
         {
           "date": "2026-11-17",
-          "title": "First beta — walleye 初回ビルド",
+          "title": "First beta — taimen 初回ビルド",
           "body": "nekoOS 0.1 の初回ベータが起動。ブートアニメーション、JP APN、基本表示の nekoOS 化を確認しました。"
         }
       ]
