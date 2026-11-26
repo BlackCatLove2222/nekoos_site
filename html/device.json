@@ -80,7 +80,11 @@
           "title": "First beta — taimen 初回ビルド",
           "body": "nekoOS 0.1 の初回ベータが起動。ブートアニメーション、JP APN、基本表示の nekoOS 化を確認しました。"
         }
-      ]
+      ],
+      "installer": {
+        "url": "update/",
+        "label": "Webインストーラ（UIプレビュー）"
+      }
     }
   ]
 }

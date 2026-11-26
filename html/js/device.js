@@ -23,6 +23,14 @@
     el("d-spec-base").textContent = d.base;
     el("d-spec-theme").textContent = d.theme;
     el("d-about").textContent = d.about || "";
+    var inst = el("d-installer");
+    if (d.installer && d.installer.url) {
+      inst.href = d.installer.url;
+      if (d.installer.label) inst.textContent = d.installer.label;
+      inst.hidden = false;
+    } else {
+      inst.hidden = true;
+    }
     var dl = d.download || {};
     el("dl-file").textContent = dl.file || "—";
     el("dl-meta").textContent = "サイズ: " + (dl.size || "—") + " / 対象: " + d.name + " (" + d.codename + ")";
