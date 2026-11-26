@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>nekoOS インストーラ（UI プレビュー）</title>
+<style>
+:root{--bg:#0e0e12;--panel:#17171f;--panel-2:#1e1e28;--line:#2a2a38;--text:#e9e9f0;--muted:#9a9ab0;--accent:#f6a5c0;--accent-2:#b48cff;--ok:#7ad19b;--warn:#f5c871;--err:#ff8a8a;--danger:#ff6b8a;--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,rgba(180,140,255,.12),transparent 60%),radial-gradient(1000px 500px at -10% 10%,rgba(246,165,192,.10),transparent 55%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:760px;margin:0 auto;padding:22px 20px 60px}
+.hidden{display:none!important}.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em}.muted{color:var(--muted)}
+.previewbar{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#1a1020;text-align:center;font-weight:700;font-size:.82rem;padding:7px;border-radius:999px;margin-bottom:16px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:14px}.cat{color:var(--accent);display:inline-flex;filter:drop-shadow(0 2px 6px rgba(246,165,192,.35))}
+.top h1{font-size:1.35rem;margin:0}.beta{font-size:.62em;color:var(--bg);background:var(--accent);padding:2px 7px;border-radius:999px;vertical-align:middle;margin-left:6px;font-weight:700}
+.sub{margin:2px 0 0;color:var(--muted);font-size:.85rem}.target{color:var(--muted);font-size:.85rem;margin:0}.target b{color:var(--text)}
+.rail{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 20px;counter-reset:step}
+.rail-item{counter-increment:step;color:var(--muted);font-size:.78rem;padding:6px 10px 6px 28px;position:relative;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+.rail-item::before{content:counter(step);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:var(--line);color:var(--text);font-size:.68rem;display:grid;place-items:center}
+.rail-item.active{color:var(--text);border-color:var(--accent)}.rail-item.active::before{background:var(--accent);color:var(--bg);font-weight:700}
+.rail-item.passed{color:var(--ok)}.rail-item.passed::before{background:var(--ok);color:var(--bg);content:"✓"}
+.rail-item.skipped{color:var(--muted);border-style:dashed}.rail-item.skipped::before{content:"–";background:var(--line);color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+.card h2{margin:0 0 12px;font-size:1.12rem}.card h3{margin:0 0 8px;font-size:.98rem}.card p{margin:0 0 12px}
+.warnlist{margin:0 0 14px;padding-left:18px}.warnlist li{margin:6px 0;font-size:.92rem}.warn-text{color:var(--warn)}.ok-text{color:var(--ok)}
+.note{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.88rem;margin-bottom:12px}.note summary{cursor:pointer;color:var(--accent)}.note code{background:#000;padding:1px 6px;border-radius:6px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;border-radius:10px;padding:10px 18px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);cursor:pointer;transition:.15s}
+button:hover{border-color:var(--accent)}button:disabled{opacity:.45;cursor:not-allowed}
+button.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#1a1020;border:none;font-weight:700}button.primary:hover{filter:brightness(1.06)}button.ghost{background:transparent}button.danger{background:var(--danger);color:#230;border:none;font-weight:700}
+.filepick{margin:10px 0}#file-input{color:var(--muted);font-size:.9rem}#files-summary{font-size:.86rem;margin-bottom:8px}
+.progress-wrap{margin:14px 0 4px}.progress-row{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:6px}
+.progress{height:10px;background:var(--panel-2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .2s}
+.choice{display:grid;gap:10px;margin:6px 0 12px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2);cursor:pointer}
+.opt:hover{border-color:var(--accent)}.opt input{margin-top:4px;flex:none}.opt p{margin:4px 0 0;font-size:.86rem}.opt.disabled{opacity:.5;cursor:not-allowed}
+.advtoggle{display:inline-flex;gap:8px;align-items:center;font-size:.86rem;color:var(--muted);margin-bottom:10px;cursor:pointer}
+.note-inline{font-size:.86rem;margin-bottom:8px}
+.postbox{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:6px 0 4px}
+.logpanel{background:#0a0a0e;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.logpanel-head{font-size:.78rem;color:var(--muted);padding:8px 14px;border-bottom:1px solid var(--line);background:var(--panel)}
+.log{max-height:200px;overflow:auto;padding:10px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem}
+.log-line{white-space:pre-wrap;word-break:break-word;color:var(--muted);padding:1px 0}.log-line.ok{color:var(--ok)}.log-line.warn{color:var(--warn)}.log-line.error{color:var(--err)}
+.device-info{margin-top:6px}.foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:22px}
+@media(max-width:560px){.top{flex-direction:column;align-items:flex-start;gap:6px}.rail-item{font-size:.72rem}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="previewbar">UI プレビュー — 実際の書き込みは行いません（デモ用に進行を模擬します）</div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="cat" aria-hidden="true"><svg viewBox="0 0 64 64" width="36" height="36"><path d="M12 20 L20 10 L26 20 M52 20 L44 10 L38 20 M10 24 C10 44 22 56 32 56 C42 56 54 44 54 24 C54 20 50 18 46 20 C42 16 22 16 18 20 C14 18 10 20 10 24 Z" fill="currentColor"/><circle cx="24" cy="32" r="2.4" fill="#0e0e12"/><circle cx="40" cy="32" r="2.4" fill="#0e0e12"/></svg></span>
+      <div><h1>nekoOS インストーラ <span class="beta">BETA</span></h1><p class="sub">nekoOS 0.4 (beta installer)</p></div>
+    </div>
+    <p class="target">対象: <b>Pixel 2 XL (taimen)</b></p>
+  </header>
+
+  <ol class="rail">
+    <li class="rail-item">はじめに</li><li class="rail-item">接続</li><li class="rail-item">アンロック</li>
+    <li class="rail-item">書き込み</li><li class="rail-item">GApps</li><li class="rail-item">リロック</li><li class="rail-item">完了</li>
+  </ol>
+
+  <section id="step-intro" class="card">
+    <h2>はじめに</h2>
+    <p>このツールは <b>Pixel 2 XL (taimen)</b> に nekoOS を書き込みます。所要時間は数分〜十数分です。</p>
+    <ul class="warnlist"><li><b>データは全て消去されます。</b> 事前にバックアップを。</li><li>ブートローダのアンロックが必要です。</li><li>書き込み中は <b>USB を抜かない</b>でください。</li><li>端末を <b>fastboot モード</b>にしてから接続します。</li></ul>
+    <details class="note"><summary>fastboot モードへの入り方</summary><p>電源を切り、<b>電源 + 音量下</b>を同時長押し。または <code>adb reboot bootloader</code>。</p></details>
+    <div class="actions"><button id="btn-start" class="primary">はじめる</button></div>
+  </section>
+
+  <section id="step-connect" class="card hidden">
+    <h2>接続</h2>
+    <p>端末を fastboot モードにして USB 接続し、下のボタンで端末を選択してください。</p>
+    <div id="device-info" class="mono muted device-info"></div>
+    <div class="actions"><button id="btn-connect" class="primary">端末に接続</button></div>
+  </section>
+
+  <section id="step-unlock" class="card hidden">
+    <h2>ブートローダのアンロック</h2>
+    <p class="warn-text">この端末はロックされています。アンロックすると <b>データが全消去</b>されます。</p>
+    <ul class="warnlist"><li>先に開発者向けオプションで <b>「OEM ロック解除」を ON</b>。</li><li>端末画面は既定 <b>「Do not unlock」</b>。<b>音量キー</b>で移動し <b>電源キー</b>で確定。</li></ul>
+    <div class="actions"><button id="btn-unlock" class="primary">アンロックを実行</button><button id="btn-unlock-skip" class="ghost">既にアンロック済み（スキップ）</button></div>
+  </section>
+
+  <section id="step-flash" class="card hidden">
+    <h2>イメージの書き込み</h2>
+    <p>nekoOS のイメージ（<span class="mono">boot / dtbo / vendor / vbmeta / system</span>）を選択してください。</p>
+    <div class="filepick"><input id="file-input" type="file" multiple accept=".img" disabled /></div>
+    <div id="files-summary" class="muted">プレビューでは選択不要です。「書き込みを開始」で進行を模擬します。</div>
+    <div class="progress-wrap"><div class="progress-row"><span id="flash-step" class="mono"></span><span id="progress-label" class="muted"></span></div><div class="progress"><div id="progress-bar" class="progress-bar"></div></div></div>
+    <div class="actions"><button id="btn-flash" class="primary">書き込みを開始</button></div>
+  </section>
+
+  <section id="step-gapps" class="card hidden">
+    <h2>Google サービスの入れ方</h2>
+    <p>nekoOS は GApps を同梱していません。入れ方を選んでください。<b>この選択でリロックの可否が変わります。</b></p>
+    <div class="choice">
+      <label class="opt"><input type="radio" name="gapps" value="A" checked />
+        <div><b>A. 後で root（KSU）で入れる（推奨）</b><p class="muted">起動後に KSU マネージャから systemless の GApps モジュールを導入。/system を触らないので <b class="ok-text">リロック可能</b>。GApps は2回目の起動から有効。</p></div></label>
+      <label class="opt disabled" id="opt-b"><input type="radio" name="gapps" value="B" disabled />
+        <div><b>B. 自分で sideload する（上級）</b><p class="muted">recovery で GApps を自分で sideload。<b class="warn-text">この経路ではリロックできません（アンロックのまま）。</b></p></div></label>
+    </div>
+    <label class="advtoggle"><input type="checkbox" id="adv-enable" /> 上級者向けオプション（B）を有効にする</label>
+    <div id="relock-note" class="note-inline"></div>
+    <div class="actions"><button id="btn-gapps-next" class="primary">次へ</button></div>
+  </section>
+
+  <section id="step-relock" class="card hidden">
+    <h2>ブートローダのリロック（任意）</h2>
+    <p>盗難耐性のためブートローダをリロックできます（nekoOS のカスタム AVB 鍵を登録）。</p>
+    <ul class="warnlist"><li><b>リロック後、初回起動で真っ先に「OEM ロック解除」を ON に戻す。</b></li><li>ロック中は「OEM ロック解除」を OFF にしない。</li></ul>
+    <div class="actions"><button id="btn-relock-yes" class="danger">リロックする</button><button id="btn-relock-skip" class="ghost">リロックしない（アンロックのまま）</button></div>
+  </section>
+
+  <section id="step-done" class="card hidden">
+    <h2>完了</h2>
+    <p class="ok-text">書き込みが完了しました。端末を再起動して初期設定を行ってください。</p>
+    <div id="gapps-guide-a" class="postbox">
+      <h3>次に：GApps / Integrity（root 経路）</h3>
+      <p>初回起動後、<b>KSU マネージャから systemless の GApps モジュール</b>を導入すると Play が使えます。PIF / keybox モジュールも各自で導入してください。</p>
+    </div>
+    <div id="gapps-guide-b" class="postbox hidden">
+      <h3>次に：GApps（sideload 経路）</h3>
+      <p class="warn-text">この経路ではリロックしていません（アンロックのまま）。</p>
+      <p>端末を recovery に入れ、<b>用意した GApps を自分で sideload</b> してください。user ビルドの recovery は署名検証が厳格なため、適合パッケージ／改修が必要です。</p>
+    </div>
+    <div class="actions"><button id="btn-reboot" class="primary">端末を再起動</button><button id="btn-restart" class="ghost">最初から見る</button></div>
+  </section>
+
+  <section class="logpanel"><div class="logpanel-head">ログ</div><div id="log" class="log"></div></section>
+  <footer class="foot"><p>nekoOS Web Installer (beta) · UI プレビュー · 実機書き込みは無効</p></footer>
+</main>
+
+<script>
+const $=(id)=>document.getElementById(id);
+const show=(id)=>$(id)?.classList.remove("hidden");
+const hide=(id)=>$(id)?.classList.add("hidden");
+const setText=(id,t)=>{const e=$(id);if(e)e.textContent=t};
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+const skipped=new Set();
+let gappsChoice="A";
+function log(m,k=""){const el=$("log");const l=document.createElement("div");l.className="log-line "+k;l.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;el.appendChild(l);el.scrollTop=el.scrollHeight;}
+function setProgress(f,label){const b=$("progress-bar");if(b)b.style.width=`${Math.round((f||0)*100)}%`;if(label!==undefined)setText("progress-label",label);}
+const STEPS=["intro","connect","unlock","flash","gapps","relock","done"];
+function goStep(name){for(const s of STEPS)hide(`step-${s}`);show(`step-${name}`);const idx=STEPS.indexOf(name);
+  document.querySelectorAll(".rail-item").forEach((el,i)=>{el.classList.toggle("active",i===idx);el.classList.toggle("passed",i<idx&&!skipped.has(i));el.classList.toggle("skipped",skipped.has(i));});}
+
+function updateRelockNote(){const b=document.querySelector('input[name="gapps"]:checked')?.value||"A";const n=$("relock-note");
+  if(b==="A"){n.textContent="A: /system を触らないため、この後リロックできます。";n.className="note-inline ok-text";}
+  else{n.textContent="⚠ B を選ぶとリロックはできません（アンロックのままになります）。";n.className="note-inline warn-text";}}
+function onAdv(on){const bR=document.querySelector('input[name="gapps"][value="B"]');$("opt-b").classList.toggle("disabled",!on);if(bR)bR.disabled=!on;if(!on){document.querySelector('input[name="gapps"][value="A"]').checked=true;updateRelockNote();}}
+function showDone(branch){if(branch==="B"){hide("gapps-guide-a");show("gapps-guide-b");}else{show("gapps-guide-a");hide("gapps-guide-b");}goStep("done");}
+
+$("btn-start").onclick=()=>goStep("connect");
+$("btn-connect").onclick=async()=>{log("デバイス選択を要求中…（プレビュー）");await sleep(450);log("USB 接続成立。","ok");setText("device-info","product: taimen  /  serial: HT7A1xxxxx  /  unlocked: no  /  slot: a");await sleep(350);log("Pixel 2 XL (taimen) を確認。ロック中 → アンロックへ。");goStep("unlock");};
+$("btn-unlock").onclick=async()=>{log("flashing unlock を送信（端末画面で確認）。","warn");await sleep(600);log("アンロック送信（プレビュー）。","ok");goStep("flash");};
+$("btn-unlock-skip").onclick=()=>goStep("flash");
+const PARTS=[["boot","41.9 MB"],["dtbo","8.4 MB"],["vendor","524 MB"],["vbmeta","4.0 KB"],["system","2.50 GB"]];
+$("btn-flash").onclick=async()=>{$("btn-flash").disabled=true;log("書き込みを開始します。USB を抜かないでください。","warn");
+  for(let i=0;i<PARTS.length;i++){const[p,sz]=PARTS[i];setText("flash-step",`(${i+1}/${PARTS.length}) ${p}`);log(`flash ${p} (${sz}) …`);for(let f=0;f<=10;f++){setProgress(f/10,`${p} を書き込み中… ${f*10}%`);await sleep(55);}log(`flash ${p} 完了`,"ok");}
+  setProgress(1,"完了");log("全パーティションの書き込みが完了しました。","ok");goStep("gapps");};
+document.querySelectorAll('input[name="gapps"]').forEach(r=>r.addEventListener("change",updateRelockNote));
+$("adv-enable").addEventListener("change",e=>onAdv(e.target.checked));
+$("btn-gapps-next").onclick=()=>{gappsChoice=document.querySelector('input[name="gapps"]:checked')?.value||"A";
+  if(gappsChoice==="B"){log("GApps 方式: B（sideload）。この経路ではリロックしません。","warn");skipped.add(STEPS.indexOf("relock"));showDone("B");}
+  else{log("GApps 方式: A（root / KSU モジュール）。");skipped.delete(STEPS.indexOf("relock"));goStep("relock");}};
+$("btn-relock-yes").onclick=async()=>{log("erase avb_custom_key …","warn");await sleep(350);log("flash avb_custom_key pkmd.bin …","warn");await sleep(350);log("get_unlock_ability: 1（端末画面で目視確認）","warn");await sleep(350);log("flashing lock …","warn");await sleep(450);log("リロック送信（プレビュー）。","ok");showDone("A");};
+$("btn-relock-skip").onclick=()=>showDone("A");
+$("btn-reboot").onclick=()=>log("再起動します…（プレビュー）");
+$("btn-restart").onclick=()=>{$("log").innerHTML="";setProgress(0,"");$("btn-flash").disabled=false;skipped.clear();$("adv-enable").checked=false;onAdv(false);goStep("intro");};
+
+onAdv(false);updateRelockNote();goStep("intro");log("UI プレビューを読み込みました。各ボタンでフローを進めます。");
+</script>
+</body>
+</html>
